@@ -1,0 +1,14 @@
+{
+  "name": "tracepad",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "workspaces": ["apps/*"],
+  "scripts": {
+    "content:build": "python3 -I tools/content/build.py",
+    "content:test": "python3 -I tools/content/test_pipeline.py",
+    "dev": "npm run -w apps/web dev",
+    "build": "npm run content:build && npm run -w apps/web build",
+    "test": "npm run content:test && npm run -w apps/web test"
+  }
+}

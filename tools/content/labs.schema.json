@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Tracepad lab definitions",
+  "type": "object",
+  "required": ["lesson", "schema", "chapters"],
+  "additionalProperties": false,
+  "properties": {
+    "lesson": {"type": "string"},
+    "schema": {"const": 1},
+    "chapters": {"type": "object", "patternProperties": {"^[0-9]+$": {"$ref": "#/$defs/chapter"}}, "additionalProperties": false}
+  },
+  "$defs": {
+    "text": {
+      "type": "object", "required": ["en"], "additionalProperties": false,
+      "properties": {"en": {"type": "string", "minLength": 1}, "fa": {"type": "string", "minLength": 1}, "fa_status": {"enum": ["machine", "reviewed"]}}
+    },
+    "tag": {"type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"},
+    "id": {"type": "string", "pattern": "^[a-z][a-z0-9]*$"},
+    "chapter": {
+      "type": "object", "additionalProperties": false,
+      "properties": {
+        "memory_demo": {"type": "string"},
+        "predictions": {"type": "array", "items": {"$ref": "#/$defs/prediction"}},
+        "quizzes": {"type": "array", "items": {"$ref": "#/$defs/quiz"}},
+        "exercises": {"type": "array", "items": {"$ref": "#/$defs/exercise"}}
+      }
+    },
+    "prediction": {
+      "type": "object", "required": ["id", "tag", "code", "answer", "why"], "additionalProperties": false,
+      "properties": {
+        "id": {"$ref": "#/$defs/id"}, "tag": {"$ref": "#/$defs/tag"}, "code": {"type": "string", "minLength": 1},
+        "answer": {"type": "string"}, "exact": {"type": "boolean"}, "memory_after": {"type": "boolean"},
+        "nondeterministic": {"type": "boolean"}, "why": {"$ref": "#/$defs/text"}
+      }
+    },
+    "quiz": {
+      "type": "object", "required": ["id", "tag", "question", "options", "correct", "why"], "additionalProperties": false,
+      "properties": {
+        "id": {"$ref": "#/$defs/id"}, "tag": {"$ref": "#/$defs/tag"}, "question": {"$ref": "#/$defs/text"},
+        "options": {"type": "array", "minItems": 2, "maxItems": 8, "items": {"$ref": "#/$defs/text"}},
+        "correct": {"type": "integer", "minimum": 0}, "why": {"$ref": "#/$defs/text"}
+      }
+    },
+    "exercise": {
+      "type": "object", "required": ["id", "prompt", "starter", "solution", "tests", "hints"], "additionalProperties": false,
+      "properties": {
+        "id": {"$ref": "#/$defs/id"}, "title": {"type": "string"}, "prompt": {"$ref": "#/$defs/text"},
+        "starter": {"type": "string"}, "solution": {"type": "string", "minLength": 1},
+        "param": {"type": "object", "required": ["pattern"], "additionalProperties": false,
+                  "properties": {"pattern": {"type": "string"}, "flags": {"type": "string", "pattern": "^[im]*$"}}},
+        "tests": {"type": "array", "minItems": 1, "items": {
+          "type": "object", "required": ["out"], "additionalProperties": false,
+          "properties": {"set": {"type": "string"}, "post": {"type": "string"}, "out": {"type": "string"}, "hidden": {"type": "boolean"}}}},
+        "hints": {"type": "array", "minItems": 2, "maxItems": 4, "items": {"$ref": "#/$defs/text"}}
+      }
+    }
+  }
+}

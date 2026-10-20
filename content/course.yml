@@ -1,0 +1,23 @@
+# The course outline. Adding a lesson is a content task: add a folder under content/lessons/, list it here, run `npm run content:build`.
+course:
+  id: python-foundations
+  title:
+    en: Python from Zero
+    fa: پایتون از صفر
+  tagline:
+    en: Predict first, then run, then see the memory.
+    fa: اول پیش‌بینی کنید، بعد اجرا کنید، بعد حافظه را ببینید.
+lessons:
+  - id: 01-objects-and-data-structures
+    number: 1
+    status: published
+    title: {en: Python Object and Data Structure Basics, fa: مبانی اشیا و ساختمان‌داده در پایتون}
+  - {number: 2, status: planned, id: 02-comparison-and-conditions, title: {en: Comparison and logic operators, if / elif / else, fa: مقایسه، عملگرهای منطقی و if / elif / else}}
+  - {number: 3, status: planned, id: 03-loops, title: {en: "Loops: for, while, range, break, continue", fa: "حلقه‌ها: for، while، range، break، continue"}}
+  - {number: 4, status: planned, id: 04-functions, title: {en: "Methods and functions: parameters, return values, scope, *args / **kwargs, lambda", fa: "متدها و توابع: پارامتر، مقدار بازگشتی، حوزه، *args / **kwargs و lambda"}}
+  - {number: 5, status: planned, id: 05-comprehensions-iterators-generators, title: {en: "Comprehensions, iterators and generators", fa: "جامع‌سازی‌ها، تکرارشونده‌ها و مولدها"}}
+  - {number: 6, status: planned, id: 06-errors-and-exceptions, title: {en: "Errors and exceptions: tracebacks, try / except / finally, raising, debugging", fa: "خطاها و استثناها: ردگیری، try / except / finally، raise و اشکال‌زدایی"}}
+  - {number: 7, status: planned, id: 07-modules-and-stdlib, title: {en: "Modules, packages and the standard library tour", fa: "ماژول‌ها، بسته‌ها و گشتی در کتابخانهٔ استاندارد"}}
+  - {number: 8, status: planned, id: 08-object-oriented-programming, title: {en: "Object-oriented programming: classes, inheritance, special methods", fa: "برنامه‌نویسی شیءگرا: کلاس، وراثت و متدهای ویژه"}}
+  - {number: 9, status: planned, id: 09-testing-and-good-habits, title: {en: "Testing and good habits: assert, test runner, style, docstrings, type hints", fa: "آزمون‌نویسی و عادت‌های خوب: assert، اجراگر آزمون، سبک، docstring و type hint"}}
+  - {number: 10, status: planned, id: 10-capstone-projects, title: {en: Capstone projects, fa: پروژه‌های پایانی}}

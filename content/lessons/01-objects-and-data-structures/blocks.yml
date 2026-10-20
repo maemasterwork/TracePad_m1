@@ -1,0 +1,23 @@
+# Sidecar flags for code blocks in lesson.md (the markdown itself is never edited).
+# Keys are block ids '<section>#<n>' as printed by tools/content/extract.py.
+#   after:            run these blocks first, in the same sandbox, when this block depends on earlier state
+#   nondeterministic: output may differ between runs or engines; the block must still run without error
+#   skip:             not runnable (reason required)
+#   stdin:            text fed to input()
+blocks:
+  "6.6#1":
+    after: ["6.5#1"]
+  "9.3#1":
+    after: ["9.2#2"]
+  "9.8#2":
+    after: ["9.2#2"]
+  "9.8#5":
+    after: ["9.2#2"]
+  "10-answer-key#4":
+    after: ["10-part-c#1"]
+  "8.2#1":
+    nondeterministic: "prints a set of strings; set order changes with Python's string hash seed"
+  "8.8#2":
+    nondeterministic: "prints a set of strings; set order changes with Python's string hash seed"
+  "8.8#5":
+    nondeterministic: "prints a set of strings; set order changes with Python's string hash seed"

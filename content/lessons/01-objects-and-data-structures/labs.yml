@@ -1,0 +1,1333 @@
+# Lesson 1 labs. Imported from the prototype (tools/content/import_prototype_labs.mjs); this file is now the source of truth.
+# Learner-visible text has en and fa. HTML in text is limited to code, em, strong, br (see labs.schema.json).
+lesson: 01-objects-and-data-structures
+schema: 1
+chapters:
+  1:
+    predictions:
+    - id: p1
+      tag: true-division
+      code: print(7 / 2, 7 // 2, 7 % 2)
+      answer: 3.5 3 1
+      why:
+        en: <code>/</code> always returns a float (3.5). <code>//</code> keeps the whole part (3). <code>%</code> is what is left over (1), because 7 = 2 × 3 + 1.
+        fa: <code>/</code> همیشه عدد اعشاری برمی‌گرداند (3.5). <code>//</code> فقط بخش صحیح را نگه می‌دارد (3). <code>%</code> باقی‌مانده است (1)، چون 7 = 2 × 3 + 1.
+    - id: p2
+      tag: floor-neg
+      code: print(-7 // 2, -7 % 2)
+      answer: -4 1
+      why:
+        en: <code>//</code> rounds toward negative infinity, so -3.5 becomes -4. Python keeps the rule a = (a // b) × b + a % b, so <code>-7 % 2</code> is 1.
+        fa: <code>//</code> به سمت منفی بی‌نهایت گرد می‌کند، پس <code>-3.5</code> به <code>-4</code> تبدیل می‌شود. پایتون قاعدهٔ a = (a // b) × b + a % b را حفظ می‌کند؛ بنابراین <code>-7 % 2</code> برابر 1 است.
+    - id: p3
+      tag: float-eq
+      code: |-
+        print(0.1 + 0.2)
+        print(0.1 + 0.2 == 0.3)
+      answer: |-
+        0.30000000000000004
+        False
+      why:
+        en: Floats are stored in binary, and 0.1 and 0.2 have no exact binary form, so the sum is a hair above 0.3. Never compare floats with <code>==</code>. Use <code>math.isclose()</code>, or <code>Decimal</code> for money.
+        fa: اعشاری‌ها در مبنای دو ذخیره می‌شوند و 0.1 و 0.2 در این مبنا دقیق نمایش داده نمی‌شوند، پس حاصل‌جمع کمی بیشتر از 0.3 است. اعشاری‌ها را هرگز با <code>==</code> مقایسه نکنید؛ از <code>math.isclose()</code> یا برای پول از <code>Decimal</code> استفاده کنید.
+    - id: p4
+      tag: round-even
+      code: print(round(2.5), round(3.5), int(7.9))
+      answer: 2 4 7
+      why:
+        en: '<code>round()</code> sends exact halves to the nearest even number: 2.5 becomes 2 and 3.5 becomes 4. <code>int()</code> cuts off the decimals without rounding.'
+        fa: '<code>round()</code> مقدارهای دقیقاً وسط را به نزدیک‌ترین عدد زوج می‌برد: 2.5 می‌شود 2 و 3.5 می‌شود 4. <code>int()</code> اعشار را بدون گرد کردن حذف می‌کند.'
+    - id: p5
+      tag: precedence
+      code: print(-2 ** 2, (-2) ** 2)
+      answer: -4 4
+      why:
+        en: Power binds tighter than the unary minus, so <code>-2 ** 2</code> means <code>-(2 ** 2)</code>. Parentheses change the order.
+        fa: توان از منفی یگانی قوی‌تر عمل می‌کند، پس <code>-2 ** 2</code> یعنی <code>-(2 ** 2)</code>. پرانتز ترتیب را عوض می‌کند.
+    - id: p6
+      tag: floor-neg
+      code: print(10 / 3, 10 // 3, 10 % 3, -10 // 3, -10 % 3)
+      answer: 3.3333333333333335 3 1 -4 2
+      why:
+        en: This is Try It 3. <code>10 / 3</code> is a float, <code>10 // 3</code> is 3, and <code>-10 // 3</code> floors down to -4, which leaves <code>-10 % 3</code> = 2 because -10 = 3 × (-4) + 2.
+        fa: این همان «امتحان کنید» شمارهٔ 3 است. <code>10 / 3</code> اعشاری است، <code>10 // 3</code> برابر 3 است و <code>-10 // 3</code> به پایین گرد می‌شود و -4 می‌دهد؛ پس <code>-10 % 3</code> برابر 2 است، چون -10 = 3 × (-4) + 2.
+    quizzes: []
+    exercises:
+    - id: e1
+      prompt:
+        en: 'Example 2 as an exercise: turn a number of seconds into a clock. Fill in <code>hours</code>, <code>minutes</code> and <code>seconds</code> using only <code>//</code> and <code>%</code>. For 98765 seconds the program must print <code>27:26:05</code>.'
+        fa: 'مثال 2 به‌صورت تمرین: ثانیه‌ها را به ساعت تبدیل کنید. مقدارهای <code>hours</code>، <code>minutes</code> و <code>seconds</code> را فقط با <code>//</code> و <code>%</code> بنویسید. برای 98765 ثانیه برنامه باید <code>27:26:05</code> را چاپ کند.'
+      starter: |
+        total_seconds = 98765
+
+        # Use // and % to fill in these three variables
+        hours = 0
+        minutes = 0
+        seconds = 0
+
+        print(f"{hours:02d}:{minutes:02d}:{seconds:02d}")
+      solution: |
+        total_seconds = 98765
+
+        hours = total_seconds // 3600
+        minutes = (total_seconds % 3600) // 60
+        seconds = total_seconds % 60
+
+        print(f"{hours:02d}:{minutes:02d}:{seconds:02d}")
+      param:
+        pattern: ^total_seconds\s*=.*$
+        flags: m
+      tests:
+      - out: '27:26:05'
+      - set: total_seconds = 3725
+        out: 01:02:05
+      - set: total_seconds = 59
+        out: 00:00:59
+      - set: total_seconds = 86400
+        out: '24:00:00'
+      hints:
+      - en: One hour is 3600 seconds. Which operator tells you how many whole 3600s fit into a number?
+        fa: یک ساعت 3600 ثانیه است. کدام عملگر می‌گوید چند تا 3600 کامل در یک عدد جا می‌شود؟
+      - en: '<code>//</code> counts whole units and <code>%</code> gives what is left. After taking out the hours, work with the leftover: <code>total_seconds % 3600</code>.'
+        fa: '<code>//</code> تعداد واحدهای کامل را می‌شمارد و <code>%</code> باقی‌مانده را می‌دهد. بعد از جدا کردن ساعت‌ها، با باقی‌مانده کار کنید: <code>total_seconds % 3600</code>.'
+      - en: 'Minutes are the whole 60s inside that leftover. Seconds are what remains after removing whole minutes: <code>total_seconds % 60</code>.'
+        fa: 'دقیقه‌ها تعداد 60های کامل در آن باقی‌مانده‌اند. ثانیه‌ها همان چیزی است که بعد از جدا کردن دقیقه‌های کامل می‌ماند: <code>total_seconds % 60</code>.'
+    - id: e2
+      prompt:
+        en: 'Homework 3, digit sum: take a 4-digit integer, pull out each digit using only <code>//</code> and <code>%</code> (no strings), and print the sum. For 4729 the answer is 22.'
+        fa: 'تکلیف 3، مجموع رقم‌ها: یک عدد چهاررقمی را بگیرید، هر رقم را فقط با <code>//</code> و <code>%</code> جدا کنید (بدون رشته) و مجموع را چاپ کنید. برای 4729 جواب 22 است.'
+      starter: |
+        number = 4729
+
+        # Pull out each digit using only // and %
+        thousands = 0
+        hundreds = 0
+        tens = 0
+        ones = 0
+
+        print(thousands + hundreds + tens + ones)
+      solution: |
+        number = 4729
+
+        thousands = number // 1000
+        hundreds = number // 100 % 10
+        tens = number // 10 % 10
+        ones = number % 10
+
+        print(thousands + hundreds + tens + ones)
+      param:
+        pattern: ^number\s*=.*$
+        flags: m
+      tests:
+      - out: '22'
+      - set: number = 1234
+        out: '10'
+      - set: number = 9999
+        out: '36'
+      - set: number = 1000
+        out: '1'
+      - set: number = 5005
+        out: '10'
+      hints:
+      - en: The last digit is the remainder when you divide by 10.
+        fa: رقم آخر همان باقی‌ماندهٔ تقسیم بر 10 است.
+      - en: To reach the tens digit, first drop the ones with <code>// 10</code>, then take <code>% 10</code>.
+        fa: برای رسیدن به رقم دهگان، ابتدا یکان را با <code>// 10</code> حذف کنید و بعد <code>% 10</code> بگیرید.
+      - en: 'Hundreds: <code>number // 100 % 10</code>. Thousands: <code>number // 1000</code>.'
+        fa: 'صدگان: <code>number // 100 % 10</code>. هزارگان: <code>number // 1000</code>.'
+  2:
+    memory_demo: |
+      a = [1, 2, 3]
+      b = a
+      c = a.copy()
+      b.append(4)
+      n = 5
+      m = n
+      n = 10
+    predictions:
+    - id: p1
+      tag: rebinding
+      code: |-
+        a = 5
+        b = a
+        a = 10
+        print(a, b)
+      answer: 10 5
+      why:
+        en: After <code>b = a</code> both names point at 5. <code>a = 10</code> moves only the name a to a new object. b still points at 5.
+        fa: بعد از <code>b = a</code> هر دو نام به 5 اشاره می‌کنند. <code>a = 10</code> فقط نام a را به شیء تازه‌ای می‌برد. b هنوز به 5 اشاره می‌کند.
+    - id: p2
+      tag: alias
+      code: |-
+        a = [1, 2, 3]
+        b = a
+        b.append(4)
+        print(a)
+      answer: '[1, 2, 3, 4]'
+      why:
+        en: <code>b = a</code> makes a second name for the same list. <code>append</code> changes that one list, so a shows the change too.
+        fa: <code>b = a</code> یک نام دوم برای همان لیست می‌سازد. <code>append</code> همان یک لیست را تغییر می‌دهد، پس a هم تغییر را نشان می‌دهد.
+    - id: p3
+      tag: alias
+      code: |-
+        a = [1, 2, 3]
+        b = a.copy()
+        b.append(4)
+        print(a, a is b)
+      answer: '[1, 2, 3] False'
+      why:
+        en: <code>copy()</code> builds a new list, so b has its own box. <code>a is b</code> asks whether both names point at the same object. Here they do not.
+        fa: <code>copy()</code> لیست تازه‌ای می‌سازد، پس b جعبهٔ خودش را دارد. <code>a is b</code> می‌پرسد آیا هر دو نام به یک شیء اشاره می‌کنند. اینجا نه.
+    - id: p4
+      tag: swap
+      code: |-
+        a, b = 1, 2
+        a, b = b, a
+        print(a, b)
+      answer: 2 1
+      why:
+        en: The right side is packed into a tuple first, <code>(b, a)</code>, and then unpacked into the names. No temporary variable is needed.
+        fa: ابتدا سمت راست در یک تاپل <code>(b, a)</code> جمع می‌شود و بعد در نام‌ها باز می‌شود. به متغیر موقت نیازی نیست.
+    - id: p5
+      tag: augmented
+      code: |-
+        score = 10
+        score += 5
+        score -= 3
+        score *= 2
+        score //= 5
+        score **= 2
+        print(score)
+      answer: '16'
+      why:
+        en: 'Track it line by line: 15, 12, 24, 4 (24 // 5), then 16 (4 squared).'
+        fa: 'خط‌به‌خط دنبال کنید: 15، 12، 24، 4 (24 // 5) و بعد 16 (مربع 4).'
+    - id: p6
+      tag: accumulate
+      code: |-
+        scores = [60, 90, 90]
+        total = 0
+        for s in scores:
+            total = s
+        print("Average:", total / len(scores))
+      answer: 'Average: 30.0'
+      why:
+        en: Each pass replaces total with s instead of adding to it. After the loop total is 90, and 90 / 3 is 30.0.
+        fa: هر دور، total با s جایگزین می‌شود و به آن اضافه نمی‌شود. بعد از حلقه total برابر 90 است و 90 / 3 می‌شود 30.0.
+    quizzes:
+    - id: q1
+      tag: naming
+      question:
+        en: Try It 1. Which of these is a valid variable name?
+        fa: امتحان کنید 1. کدام‌یک از این‌ها نام معتبر متغیر است؟
+      options:
+      - en: <code>2total</code>
+        fa: <code>2total</code>
+      - en: <code>my var</code>
+        fa: <code>my var</code>
+      - en: <code>_x</code>
+        fa: <code>_x</code>
+      - en: <code>first-name</code>
+        fa: <code>first-name</code>
+      correct: 2
+      why:
+        en: Names can use letters, digits and underscores but cannot start with a digit, contain spaces or hyphens, or be keywords. <code>total_2</code>, <code>_x</code> and <code>Name</code> are valid. <code>2total</code>, <code>my var</code>, <code>for</code> and <code>first-name</code> are not.
+        fa: نام می‌تواند حرف، رقم و زیرخط داشته باشد اما نمی‌تواند با رقم شروع شود، فاصله یا خط‌تیره داشته باشد یا کلمهٔ کلیدی باشد. <code>total_2</code>، <code>_x</code> و <code>Name</code> معتبرند. <code>2total</code>، <code>my var</code>، <code>for</code> و <code>first-name</code> نامعتبرند.
+    - id: q2
+      tag: shadowing
+      question:
+        en: Why is <code>list = [1, 2, 3]</code> a bad line?
+        fa: چرا <code>list = [1, 2, 3]</code> کار بدی است؟
+      options:
+      - en: It is a syntax error.
+        fa: خطای نحوی است.
+      - en: It hides the built-in <code>list()</code>, so <code>list("abc")</code> later fails.
+        fa: تابع داخلی <code>list()</code> را پنهان می‌کند و بعداً <code>list("abc")</code> خطا می‌دهد.
+      - en: Lists cannot be stored in variables.
+        fa: لیست را نمی‌شود در متغیر ذخیره کرد.
+      - en: Python converts it to a tuple.
+        fa: پایتون آن را به تاپل تبدیل می‌کند.
+      correct: 1
+      why:
+        en: This is called shadowing. The name <code>list</code> now points at your list instead of the built-in function. Use names like <code>items</code> or <code>numbers</code>.
+        fa: به این کار سایه‌انداختن می‌گویند. نام <code>list</code> حالا به لیست شما اشاره می‌کند و نه به تابع داخلی. از نام‌هایی مثل <code>items</code> یا <code>numbers</code> استفاده کنید.
+    exercises:
+    - id: e1
+      prompt:
+        en: <code>b = a</code> only adds a second name. Make <code>c</code> a real, independent copy of <code>a</code>, so that <code>c.append(4)</code> leaves <code>a</code> unchanged.
+        fa: <code>b = a</code> فقط نام دومی اضافه می‌کند. <code>c</code> را یک کپی واقعی و مستقل از <code>a</code> کنید تا <code>c.append(4)</code> روی <code>a</code> اثری نداشته باشد.
+      starter: |
+        a = [1, 2, 3]
+        b = a
+
+        # c must be an independent copy of a
+        c = None
+
+        c.append(4)
+      solution: |
+        a = [1, 2, 3]
+        b = a
+
+        # c must be an independent copy of a
+        c = a.copy()
+
+        c.append(4)
+      param:
+        pattern: ^a\s*=.*$
+        flags: m
+      tests:
+      - post: print(a, c, a is c)
+        out: '[1, 2, 3] [1, 2, 3, 4] False'
+      - set: a = [9]
+        post: print(a, c, a is c)
+        out: '[9] [9, 4] False'
+      - set: a = []
+        post: print(a, c, a is c)
+        out: '[] [4] False'
+      hints:
+      - en: Press Show memory. After the <code>c = ...</code> line, c should point at its own box, not at the box that a points at.
+        fa: روی «نمایش حافظه» بزنید. بعد از خط <code>c = ...</code> باید c به جعبهٔ خودش اشاره کند، نه جعبه‌ای که a به آن اشاره می‌کند.
+      - en: Lists have a method that returns a new list with the same items. Slicing the whole list does the same.
+        fa: لیست‌ها متدی دارند که لیست تازه‌ای با همان عضوها برمی‌گرداند. برش دادن کل لیست هم همین کار را می‌کند.
+      - en: The method is called <code>copy</code>. Call it on <code>a</code> and assign the result to <code>c</code>.
+        fa: نام این متد <code>copy</code> است. آن را روی <code>a</code> صدا بزنید و نتیجه را به <code>c</code> بدهید.
+    - id: e2
+      prompt:
+        en: Bug hunt. The program should print the average of the scores, which is <code>80.0</code> here. Change one line to fix it.
+        fa: شکار باگ. برنامه باید میانگین نمره‌ها را چاپ کند که اینجا <code>80.0</code> است. با تغییر یک خط آن را درست کنید.
+      starter: |
+        scores = [60, 90, 90]
+
+        total = 0
+        for s in scores:
+            total = s
+
+        print("Average:", total / len(scores))
+      solution: |
+        scores = [60, 90, 90]
+
+        total = 0
+        for s in scores:
+            total += s
+
+        print("Average:", total / len(scores))
+      param:
+        pattern: ^scores\s*=.*$
+        flags: m
+      tests:
+      - out: 'Average: 80.0'
+      - set: scores = [10, 20]
+        out: 'Average: 15.0'
+      - set: scores = [100]
+        out: 'Average: 100.0'
+      - set: scores = [1, 2, 3, 4]
+        out: 'Average: 2.5'
+      hints:
+      - en: Run it and compare with (60 + 90 + 90) / 3. Is the printed number too big or too small?
+        fa: اجرا کنید و با (60 + 90 + 90) / 3 مقایسه کنید. عدد چاپ‌شده بزرگ‌تر است یا کوچک‌تر؟
+      - en: Inside the loop, total should grow on every pass. Does <code>total = s</code> make it grow?
+        fa: داخل حلقه، total باید در هر دور بزرگ‌تر شود. آیا <code>total = s</code> این کار را می‌کند؟
+      - en: Use an augmented assignment that adds s to total.
+        fa: از انتساب افزایشی استفاده کنید که s را به total اضافه می‌کند.
+  3:
+    predictions:
+    - id: p1
+      tag: slice-stop
+      code: |-
+        word = "Python"
+        print(word[1:4], word[:2], word[-1])
+      answer: yth Py n
+      why:
+        en: Indexes run P=0, y=1, t=2, h=3. <code>[1:4]</code> takes 1, 2 and 3, and stops before 4. <code>[:2]</code> starts at the beginning. <code>[-1]</code> is the last character.
+        fa: 'اندیس‌ها: P=0، y=1، t=2، h=3. <code>[1:4]</code> اندیس‌های 1 و 2 و 3 را می‌گیرد و قبل از 4 می‌ایستد. <code>[:2]</code> از ابتدا شروع می‌کند. <code>[-1]</code> آخرین نویسه است.'
+    - id: p2
+      tag: slice-step
+      code: print("Python"[::-1], "Python"[1:5:2])
+      answer: nohtyP yh
+      why:
+        en: A step of -1 walks backwards, which reverses the string. <code>[1:5:2]</code> takes indexes 1 and 3, giving y and h.
+        fa: گام <code>-1</code> به عقب می‌رود و رشته را برعکس می‌کند. <code>[1:5:2]</code> اندیس‌های 1 و 3 را برمی‌دارد و y و h را می‌دهد.
+    - id: p3
+      tag: method-returns-new
+      code: |-
+        name = "hello"
+        name.upper()
+        print(name)
+      answer: hello
+      why:
+        en: <code>name.upper()</code> builds a new string, but nothing stores it. The old string is untouched, so name is still hello. Write <code>name = name.upper()</code> to keep the result.
+        fa: <code>name.upper()</code> رشتهٔ تازه‌ای می‌سازد اما جایی ذخیره‌اش نمی‌کنید. رشتهٔ قبلی دست‌نخورده می‌ماند، پس name همچنان hello است. برای نگه داشتن نتیجه بنویسید <code>name = name.upper()</code>.
+    - id: p4
+      tag: replace-count
+      code: |-
+        s = "banana"
+        print(s.count("an"), s.find("na"), s.replace("a", "o", 2))
+      answer: 2 2 bonona
+      why:
+        en: <code>count("an")</code> finds two matches. <code>find("na")</code> returns the first index, 2. <code>replace("a", "o", 2)</code> changes only the first two a's.
+        fa: <code>count("an")</code> دو تطابق پیدا می‌کند. <code>find("na")</code> اولین اندیس را برمی‌گرداند، یعنی 2. <code>replace("a", "o", 2)</code> فقط دو a اول را عوض می‌کند.
+    - id: p5
+      tag: case-membership
+      code: |-
+        last = "Lovelace"
+        print("love" in last, "love" in last.lower())
+      answer: False True
+      why:
+        en: Membership tests are case sensitive. <code>"love"</code> is not inside <code>"Lovelace"</code> because of the capital L, but it is inside the lowercased copy.
+        fa: آزمون عضویت به بزرگی و کوچکی حروف حساس است. <code>"love"</code> به‌خاطر L بزرگ داخل <code>"Lovelace"</code> نیست، اما در نسخهٔ با حروف کوچک هست.
+    - id: p6
+      tag: repeat
+      code: print("abc" * 2 + "d" * 0)
+      answer: abcabc
+      why:
+        en: Multiplying a string by 0 gives an empty string, and adding an empty string changes nothing. This is Try It 2.
+        fa: ضرب یک رشته در 0 رشتهٔ خالی می‌دهد و اضافه کردن رشتهٔ خالی چیزی را عوض نمی‌کند. این همان «امتحان کنید» شمارهٔ 2 است.
+    quizzes:
+    - id: q1
+      tag: find-index
+      question:
+        en: Try It 3. What is the difference between <code>find()</code> and <code>index()</code> when the substring is missing?
+        fa: امتحان کنید 3. وقتی زیررشته وجود ندارد، تفاوت <code>find()</code> و <code>index()</code> چیست؟
+      options:
+      - en: Both return -1.
+        fa: هر دو -1 برمی‌گردانند.
+      - en: <code>find()</code> returns -1, <code>index()</code> raises ValueError.
+        fa: <code>find()</code> مقدار -1 برمی‌گرداند و <code>index()</code> خطای ValueError می‌دهد.
+      - en: <code>find()</code> raises an error, <code>index()</code> returns -1.
+        fa: <code>find()</code> خطا می‌دهد و <code>index()</code> مقدار -1 برمی‌گرداند.
+      - en: Both raise ValueError.
+        fa: هر دو ValueError می‌دهند.
+      correct: 1
+      why:
+        en: Use <code>find()</code> when a missing substring is normal and you want to test for it. Use <code>index()</code> when a missing substring would be a bug.
+        fa: وقتی نبودن زیررشته عادی است و می‌خواهید آن را بسنجید از <code>find()</code> استفاده کنید. وقتی نبودن آن باگ محسوب می‌شود از <code>index()</code> استفاده کنید.
+    exercises:
+    - id: e1
+      prompt:
+        en: Clean up a book title (this is also assessment challenge C2). Strip the edges, squeeze repeated spaces into one, and capitalize each word. Store the answer in <code>result</code>.
+        fa: عنوان یک کتاب را مرتب کنید (این همان چالش C2 آزمون هم هست). فاصله‌های ابتدا و انتها را حذف کنید، فاصله‌های تکراری را یکی کنید و حرف اول هر کلمه را بزرگ کنید. پاسخ را در <code>result</code> بگذارید.
+      starter: |
+        text = "  the   lord of   THE rings "
+
+        # Strip the edges, squeeze the inner spaces, make Title Case
+        result = text
+
+        print(result)
+      solution: |
+        text = "  the   lord of   THE rings "
+
+        # Strip the edges, squeeze the inner spaces, make Title Case
+        result = " ".join(text.split()).title()
+
+        print(result)
+      param:
+        pattern: ^text\s*=.*$
+        flags: m
+      tests:
+      - out: The Lord Of The Rings
+      - set: text = "  hello    WORLD "
+        out: Hello World
+      - set: text = "python"
+        out: Python
+      - set: text = "a  b   c"
+        out: A B C
+      hints:
+      - en: Calling <code>split()</code> with no argument cuts on any run of spaces and drops the empty pieces.
+        fa: صدا زدن <code>split()</code> بدون آرگومان، رشته را روی هر تعداد فاصله می‌برد و تکه‌های خالی را حذف می‌کند.
+      - en: <code>" ".join(pieces)</code> glues a list of words back together with single spaces.
+        fa: <code>" ".join(pieces)</code> فهرست کلمه‌ها را با یک فاصله به هم می‌چسباند.
+      - en: '<code>.title()</code> fixes the capitals. Chain the three steps: split, join, title.'
+        fa: '<code>.title()</code> حروف بزرگ را درست می‌کند. سه مرحله را زنجیر کنید: split، join، title.'
+    - id: e2
+      prompt:
+        en: 'Try It 1. Using slices only, print three lines for <code>s</code>: the string reversed, every second character, and the last five characters. For <code>"Hello, World"</code> that is <code>dlroW ,olleH</code>, <code>Hlo ol</code> and <code>World</code>.'
+        fa: 'امتحان کنید 1. فقط با برش، سه خط برای <code>s</code> چاپ کنید: رشتهٔ برعکس‌شده، هر نویسهٔ دوم و پنج نویسهٔ آخر. برای <code>"Hello, World"</code> می‌شود <code>dlroW ,olleH</code> و <code>Hlo ol</code> و <code>World</code>.'
+      starter: |
+        s = "Hello, World"
+
+        print(s)   # reversed
+        print(s)   # every second character
+        print(s)   # the last five characters
+      solution: |
+        s = "Hello, World"
+
+        print(s[::-1])   # reversed
+        print(s[::2])    # every second character
+        print(s[-5:])    # the last five characters
+      param:
+        pattern: ^s\s*=.*$
+        flags: m
+      tests:
+      - out: |-
+          dlroW ,olleH
+          Hlo ol
+          World
+      - set: s = "abcdefghij"
+        out: |-
+          jihgfedcba
+          acegi
+          fghij
+      - set: s = "Python"
+        out: |-
+          nohtyP
+          Pto
+          ython
+      hints:
+      - en: A slice is <code>s[start:stop:step]</code>. Leave a part empty to use its default.
+        fa: برش به شکل <code>s[start:stop:step]</code> است. هر بخش را خالی بگذارید تا مقدار پیش‌فرضش به کار رود.
+      - en: A step of -1 walks backwards. A step of 2 skips every other character.
+        fa: گام -1 به عقب می‌رود. گام 2 یک‌درمیان نویسه برمی‌دارد.
+      - en: 'Negative starts count from the end: <code>s[-5:]</code> begins five characters from the right.'
+        fa: 'شروع منفی از انتها شمرده می‌شود: <code>s[-5:]</code> از پنج نویسه مانده به آخر شروع می‌کند.'
+  4:
+    predictions:
+    - id: p1
+      tag: print-sep
+      code: |-
+        print("a", "b", "c", sep="-")
+        print("Loading", end="...")
+        print("done")
+      answer: |-
+        a-b-c
+        Loading...done
+      why:
+        en: <code>sep</code> goes between the values. <code>end</code> replaces the newline at the end of a print, so the next print continues on the same line.
+        fa: <code>sep</code> بین مقدارها قرار می‌گیرد. <code>end</code> به‌جای خط جدید انتهای print می‌نشیند، پس print بعدی در همان خط ادامه می‌دهد.
+    - id: p2
+      tag: fmt-spec
+      code: print(f"{3.14159:.2f} {1234567:,} {0.256:.1%}")
+      answer: 3.14 1,234,567 25.6%
+      why:
+        en: <code>.2f</code> keeps two decimals, <code>,</code> adds thousands separators, and <code>.1%</code> multiplies by 100 and adds a percent sign.
+        fa: <code>.2f</code> دو رقم اعشار نگه می‌دارد، <code>,</code> جداکنندهٔ هزارگان می‌گذارد و <code>.1%</code> در 100 ضرب می‌کند و علامت درصد می‌افزاید.
+    - id: p3
+      tag: fmt-align
+      code: print(f"[{'hi':>6}][{'hi':<6}][{'hi':^6}]")
+      answer: '[    hi][hi    ][  hi  ]'
+      exact: true
+      why:
+        en: <code>&gt;</code> right-aligns, <code>&lt;</code> left-aligns and <code>^</code> centers inside the width. Spaces count, so type them.
+        fa: <code>&gt;</code> راست‌چین می‌کند، <code>&lt;</code> چپ‌چین می‌کند و <code>^</code> وسط‌چین می‌کند. فاصله‌ها حساب می‌شوند، پس آن‌ها را بنویسید.
+    - id: p4
+      tag: fmt-base
+      code: print(f"{255:b} {255:o} {255:x} {42:05d} {5:+d}")
+      answer: 11111111 377 ff 00042 +5
+      why:
+        en: <code>b</code>, <code>o</code> and <code>x</code> print binary, octal and hex. <code>05d</code> pads with zeros to width 5. <code>+d</code> always shows the sign.
+        fa: <code>b</code> و <code>o</code> و <code>x</code> دودویی، هشت‌هشتی و شانزدهی چاپ می‌کنند. <code>05d</code> با صفر تا عرض 5 پر می‌کند. <code>+d</code> همیشه علامت را نشان می‌دهد.
+    - id: p5
+      tag: fmt-nested
+      code: |-
+        price = 1234.5
+        print(f"Price: ${price:,.2f}")
+        width, precision = 10, 3
+        print(f"{3.14159265:{width}.{precision}f}")
+      answer: |-
+        Price: $1,234.50
+             3.142
+      exact: true
+      why:
+        en: The dollar sign is plain text. In the second line the width and precision come from variables, written as nested fields. The result is padded to width 10.
+        fa: علامت دلار فقط متن است. در خط دوم عرض و دقت از متغیرها می‌آیند و به‌صورت فیلد تودرتو نوشته شده‌اند. نتیجه تا عرض 10 با فاصله پر می‌شود.
+    quizzes:
+    - id: q1
+      tag: fmt-choice
+      question:
+        en: Which way of building formatted strings does the chapter recommend for new code?
+        fa: این فصل کدام روش ساخت رشتهٔ قالب‌بندی‌شده را برای کد جدید توصیه می‌کند؟
+      options:
+      - en: <code>%</code> formatting
+        fa: قالب‌بندی با <code>%</code>
+      - en: <code>str.format()</code>
+        fa: <code>str.format()</code>
+      - en: f-strings
+        fa: f-string
+      - en: Concatenating with <code>+</code>
+        fa: چسباندن با <code>+</code>
+      correct: 2
+      why:
+        en: 'f-strings are the most readable and are the recommended style. <code>str.format()</code> is older but still common, and <code>%</code> formatting is legacy: recognize it, avoid it.'
+        fa: 'f-string خواناترین روش و سبک توصیه‌شده است. <code>str.format()</code> قدیمی‌تر اما هنوز رایج است و قالب‌بندی با <code>%</code> میراثی است: آن را بشناسید و استفاده نکنید.'
+    exercises:
+    - id: e1
+      prompt:
+        en: 'Try It 1 to 4 in one program. Print four lines: <code>amount</code> with thousands separators and 2 decimals; <code>ratio</code> as a percentage with 2 decimals; <code>title</code> centered in 21 characters padded with <code>=</code>; and <code>n</code> as 4 digits padded with zeros, a space, then <code>n</code> as 8 binary digits.'
+        fa: 'امتحان کنید 1 تا 4 در یک برنامه. چهار خط چاپ کنید: <code>amount</code> با جداکنندهٔ هزارگان و 2 رقم اعشار؛ <code>ratio</code> به‌صورت درصد با 2 رقم اعشار؛ <code>title</code> وسط‌چین در 21 نویسه با پرکنندهٔ <code>=</code>؛ و <code>n</code> در 4 رقم با صفر، یک فاصله و بعد <code>n</code> در 8 رقم دودویی.'
+      starter: |
+        amount = 1234567.891
+        ratio = 0.0734
+        title = "Python"
+        n = 7
+
+        print(amount)
+        print(ratio)
+        print(title)
+        print(n)
+      solution: |
+        amount = 1234567.891
+        ratio = 0.0734
+        title = "Python"
+        n = 7
+
+        print(f"{amount:,.2f}")
+        print(f"{ratio:.2%}")
+        print(f"{title:=^21}")
+        print(f"{n:04d} {n:08b}")
+      param:
+        pattern: ^amount\s*=.*\nratio\s*=.*\ntitle\s*=.*\nn\s*=.*$
+        flags: m
+      tests:
+      - out: |-
+          1,234,567.89
+          7.34%
+          =======Python========
+          0007 00000111
+      - set: |-
+          amount = 999.999
+          ratio = 0.5
+          title = "Hi"
+          n = 255
+        out: |-
+          1,000.00
+          50.00%
+          =========Hi==========
+          0255 11111111
+      - set: |-
+          amount = 5
+          ratio = 0.1234
+          title = "Tracepad"
+          n = 1
+        out: |-
+          5.00
+          12.34%
+          ======Tracepad=======
+          0001 00000001
+      hints:
+      - en: 'Each line is an f-string. The format spec goes after a colon: <code>{value:spec}</code>.'
+        fa: 'هر خط یک f-string است. مشخصهٔ قالب بعد از دونقطه می‌آید: <code>{value:spec}</code>.'
+      - en: <code>,.2f</code> gives thousands separators with 2 decimals. <code>.2%</code> gives a percentage. <code>04d</code> pads with zeros and <code>08b</code> prints binary.
+        fa: <code>,.2f</code> جداکنندهٔ هزارگان با 2 رقم اعشار می‌دهد. <code>.2%</code> درصد می‌دهد. <code>04d</code> با صفر پر می‌کند و <code>08b</code> دودویی چاپ می‌کند.
+      - en: 'For the centered line use fill, align and width together: <code>{title:=^21}</code>.'
+        fa: 'برای خط وسط‌چین پرکننده، چینش و عرض را با هم بنویسید: <code>{title:=^21}</code>.'
+  5:
+    predictions:
+    - id: p1
+      tag: inplace-add
+      code: |-
+        x = [1, 2, 3]
+        y = x
+        y += [4]
+        print(x)
+      answer: '[1, 2, 3, 4]'
+      why:
+        en: For lists, <code>+=</code> extends the list in place, so x and y, which are two names for one list, both see it.
+        fa: برای لیست‌ها، <code>+=</code> لیست را در جا گسترش می‌دهد، پس x و y که دو نام برای یک لیست‌اند هر دو آن را می‌بینند.
+    - id: p2
+      tag: inplace-add
+      code: |-
+        x = [1, 2, 3]
+        y = x
+        y = y + [5]
+        print(x, y)
+      answer: '[1, 2, 3] [1, 2, 3, 5]'
+      why:
+        en: <code>y + [5]</code> builds a brand new list, and then y is rebound to it. x still points at the old list.
+        fa: <code>y + [5]</code> لیست کاملاً تازه‌ای می‌سازد و بعد y به آن وصل می‌شود. x هنوز به لیست قبلی اشاره می‌کند.
+    - id: p3
+      tag: append-extend
+      code: |-
+        a = [1, 2]
+        a.append([3, 4])
+        b = [1, 2]
+        b.extend([3, 4])
+        print(a, b)
+      answer: '[1, 2, [3, 4]] [1, 2, 3, 4]'
+      why:
+        en: <code>append</code> adds its argument as one item, here a list. <code>extend</code> adds each element of its argument.
+        fa: <code>append</code> آرگومانش را به‌عنوان یک عضو اضافه می‌کند، اینجا یک لیست. <code>extend</code> هر عنصر آرگومانش را اضافه می‌کند.
+    - id: p4
+      tag: sort-none
+      code: |-
+        nums = [5, 3, 8]
+        result = nums.sort()
+        print(result, nums)
+      answer: None [3, 5, 8]
+      why:
+        en: <code>sort()</code> sorts in place and returns <code>None</code>. This is the classic bug <code>x = my_list.sort()</code>. Use <code>sorted(my_list)</code> when you want a new list.
+        fa: <code>sort()</code> در جا مرتب می‌کند و <code>None</code> برمی‌گرداند. این همان باگ کلاسیک <code>x = my_list.sort()</code> است. وقتی لیست تازه می‌خواهید از <code>sorted(my_list)</code> استفاده کنید.
+    - id: p5
+      tag: list-ops
+      code: print([1, 2, 3] * 2, [1, 2, 3] + [4])
+      answer: '[1, 2, 3, 1, 2, 3] [1, 2, 3, 4]'
+      why:
+        en: <code>*</code> repeats the list and <code>+</code> joins two lists. Both build new lists. This is Try It 2.
+        fa: <code>*</code> لیست را تکرار می‌کند و <code>+</code> دو لیست را به هم می‌چسباند. هر دو لیست تازه می‌سازند. این همان «امتحان کنید» شمارهٔ 2 است.
+    - id: p6
+      tag: sort-key
+      code: |-
+        words = ["pear", "Apple", "fig", "banana"]
+        print(sorted(words, key=str.lower))
+        print(sorted(words, key=len))
+      answer: |-
+        ['Apple', 'banana', 'fig', 'pear']
+        ['fig', 'pear', 'Apple', 'banana']
+      why:
+        en: <code>key=</code> tells <code>sorted</code> what to compare. <code>str.lower</code> ignores case, and <code>len</code> sorts by length. Ties keep their original order.
+        fa: <code>key=</code> به <code>sorted</code> می‌گوید چه چیزی را مقایسه کند. <code>str.lower</code> بزرگی و کوچکی حروف را نادیده می‌گیرد و <code>len</code> بر اساس طول مرتب می‌کند. موارد مساوی ترتیب اولیه‌شان را حفظ می‌کنند.
+    quizzes:
+    - id: q1
+      tag: alias
+      question:
+        en: Which line does <strong>not</strong> give you an independent copy of the list <code>a</code>?
+        fa: کدام خط یک کپی مستقل از لیست <code>a</code> <strong>نمی‌دهد</strong>؟
+      options:
+      - en: <code>b = a</code>
+        fa: <code>b = a</code>
+      - en: <code>b = a.copy()</code>
+        fa: <code>b = a.copy()</code>
+      - en: <code>b = a[:]</code>
+        fa: <code>b = a[:]</code>
+      - en: <code>b = list(a)</code>
+        fa: <code>b = list(a)</code>
+      correct: 0
+      why:
+        en: '<code>b = a</code> only adds a second name. The other three build a new list. All of them are shallow copies: for nested lists use <code>copy.deepcopy</code>.'
+        fa: '<code>b = a</code> فقط نام دومی اضافه می‌کند. سه مورد دیگر لیست تازه می‌سازند. همه کپی سطحی‌اند: برای لیست‌های تودرتو از <code>copy.deepcopy</code> استفاده کنید.'
+    exercises:
+    - id: e1
+      prompt:
+        en: Try It 1. From <code>numbers</code>, build a list <code>result</code> with the squares of the odd numbers only, in the original order. Use a list comprehension and print it. For <code>[3, 8, 1, 9]</code> the answer is <code>[9, 1, 81]</code>.
+        fa: امتحان کنید 1. از <code>numbers</code> لیستی به نام <code>result</code> بسازید که فقط مربع عددهای فرد را به همان ترتیب اولیه داشته باشد. از list comprehension استفاده کنید و آن را چاپ کنید. برای <code>[3, 8, 1, 9]</code> جواب <code>[9, 1, 81]</code> است.
+      starter: |
+        numbers = [3, 8, 1, 9]
+
+        # squares of the odd numbers only
+        result = []
+
+        print(result)
+      solution: |
+        numbers = [3, 8, 1, 9]
+
+        # squares of the odd numbers only
+        result = [n ** 2 for n in numbers if n % 2 == 1]
+
+        print(result)
+      param:
+        pattern: ^numbers\s*=.*$
+        flags: m
+      tests:
+      - out: '[9, 1, 81]'
+      - set: numbers = [2, 4, 6]
+        out: '[]'
+      - set: numbers = [5]
+        out: '[25]'
+      - set: numbers = [1, 2, 3, 4, 5]
+        out: '[1, 9, 25]'
+      hints:
+      - en: A comprehension has the shape <code>[expression for item in iterable if condition]</code>.
+        fa: comprehension شکل <code>[expression for item in iterable if condition]</code> دارد.
+      - en: 'The condition keeps only odd numbers: <code>n % 2 == 1</code>.'
+        fa: 'شرط فقط عددهای فرد را نگه می‌دارد: <code>n % 2 == 1</code>.'
+      - en: 'The expression is the square: <code>n ** 2</code>.'
+        fa: 'عبارت همان مربع است: <code>n ** 2</code>.'
+    - id: e2
+      prompt:
+        en: Try It 4. Sort <code>words</code> by length, longest first, with <code>sorted()</code> and <code>key=</code>. Store the new list in <code>result</code> and print it.
+        fa: امتحان کنید 4. <code>words</code> را با <code>sorted()</code> و <code>key=</code> بر اساس طول و از بلندترین مرتب کنید. لیست تازه را در <code>result</code> بگذارید و چاپ کنید.
+      starter: |
+        words = ["bb", "a", "ccc", "dd"]
+
+        result = words
+
+        print(result)
+      solution: |
+        words = ["bb", "a", "ccc", "dd"]
+
+        result = sorted(words, key=len, reverse=True)
+
+        print(result)
+      param:
+        pattern: ^words\s*=.*$
+        flags: m
+      tests:
+      - out: '[''ccc'', ''bb'', ''dd'', ''a'']'
+      - set: words = ["x", "yy"]
+        out: '[''yy'', ''x'']'
+      - set: words = ["pear", "fig", "banana"]
+        out: '[''banana'', ''pear'', ''fig'']'
+      hints:
+      - en: <code>sorted(items, key=function)</code> compares the value that the function returns for each item.
+        fa: <code>sorted(items, key=function)</code> مقداری را که تابع برای هر عضو برمی‌گرداند مقایسه می‌کند.
+      - en: The function you want is <code>len</code>.
+        fa: تابع مورد نظر <code>len</code> است.
+      - en: Add <code>reverse=True</code> to put the largest first.
+        fa: با افزودن <code>reverse=True</code> بزرگ‌ترین مقدار اول می‌آید.
+  6:
+    predictions:
+    - id: p1
+      tag: dict-get
+      code: |-
+        d = {"a": 1}
+        print(d.get("b"), d.get("b", 0), "a" in d)
+      answer: None 0 True
+      why:
+        en: <code>get</code> never raises for a missing key. It returns <code>None</code>, or the default you pass. <code>d["b"]</code> would raise a KeyError.
+        fa: <code>get</code> برای کلید ناموجود هرگز خطا نمی‌دهد. <code>None</code> یا پیش‌فرضی را که بدهید برمی‌گرداند. <code>d["b"]</code> خطای KeyError می‌داد.
+    - id: p2
+      tag: dict-in
+      code: |-
+        d = {"k": 1}
+        print("k" in d, 1 in d, 1 in d.values())
+      answer: True False True
+      why:
+        en: <code>in</code> on a dictionary tests the <strong>keys</strong>. To test the values, use <code>.values()</code>.
+        fa: <code>in</code> روی دیکشنری <strong>کلیدها</strong> را می‌سنجد. برای سنجش مقدارها از <code>.values()</code> استفاده کنید.
+    - id: p3
+      tag: dict-update
+      code: |-
+        d = {"a": 1, "b": 2}
+        d["c"] = d.get("c", 10) + d["a"]
+        print(sorted(d.items()))
+      answer: '[(''a'', 1), (''b'', 2), (''c'', 11)]'
+      why:
+        en: <code>d.get("c", 10)</code> gives the default 10 because there is no "c" yet. Adding <code>d["a"]</code> (1) makes 11, which creates the new key.
+        fa: <code>d.get("c", 10)</code> مقدار پیش‌فرض 10 را می‌دهد، چون هنوز "c" وجود ندارد. با افزودن <code>d["a"]</code> (برابر 1) مقدار 11 می‌شود و کلید تازه ساخته می‌شود.
+    - id: p4
+      tag: setdefault
+      code: |-
+        groups = {}
+        for word in ["apple", "avocado", "banana", "blueberry", "cherry"]:
+            groups.setdefault(word[0], []).append(word)
+        print(groups)
+      answer: '{''a'': [''apple'', ''avocado''], ''b'': [''banana'', ''blueberry''], ''c'': [''cherry'']}'
+      memory_after: true
+      why:
+        en: <code>setdefault</code> returns the list stored under the first letter, creating an empty one the first time. Then <code>append</code> adds the word to it.
+        fa: <code>setdefault</code> لیستی را که زیر حرف اول ذخیره شده برمی‌گرداند و بار اول یک لیست خالی می‌سازد. بعد <code>append</code> کلمه را به آن اضافه می‌کند.
+    - id: p5
+      tag: dict-comp
+      code: 'print({n: n ** 2 for n in range(1, 6)})'
+      answer: '{1: 1, 2: 4, 3: 9, 4: 16, 5: 25}'
+      why:
+        en: 'A dictionary comprehension is <code>{key: value for item in iterable}</code>.'
+        fa: 'dictionary comprehension به شکل <code>{key: value for item in iterable}</code> است.'
+    - id: p6
+      tag: dict-sort
+      code: |-
+        scores = {"Ali": 17, "Sara": 20, "Reza": 15}
+        print(max(scores, key=scores.get))
+        print(sorted(scores.items(), key=lambda kv: kv[1], reverse=True))
+      answer: |-
+        Sara
+        [('Sara', 20), ('Ali', 17), ('Reza', 15)]
+      why:
+        en: <code>max(scores, key=scores.get)</code> looks at the keys but compares their values. Sorting <code>items()</code> by the second element of each pair ranks the scores.
+        fa: <code>max(scores, key=scores.get)</code> کلیدها را می‌گیرد اما مقدارهایشان را مقایسه می‌کند. مرتب‌سازی <code>items()</code> بر اساس عنصر دوم هر جفت، نمره‌ها را رتبه‌بندی می‌کند.
+    quizzes:
+    - id: q1
+      tag: hashable
+      question:
+        en: 'Try It 2. Why does <code>{[1, 2]: "x"}</code> raise a TypeError?'
+        fa: 'امتحان کنید 2. چرا <code>{[1, 2]: "x"}</code> خطای TypeError می‌دهد؟'
+      options:
+      - en: Dictionary keys must be unique.
+        fa: کلیدهای دیکشنری باید یکتا باشند.
+      - en: Dictionary keys must be hashable, and a list is mutable so it is not.
+        fa: کلیدهای دیکشنری باید hashable باشند و لیست چون تغییرپذیر است نیست.
+      - en: Lists can only hold numbers.
+        fa: لیست فقط می‌تواند عدد نگه دارد.
+      - en: The value "x" is too short.
+        fa: مقدار "x" بیش از حد کوتاه است.
+      correct: 1
+      why:
+        en: 'Keys must be hashable and immutable: <code>str</code>, <code>int</code> and <code>tuple</code> work, <code>list</code>, <code>dict</code> and <code>set</code> do not.'
+        fa: 'کلیدها باید hashable و تغییرناپذیر باشند: <code>str</code> و <code>int</code> و <code>tuple</code> درست‌اند، اما <code>list</code> و <code>dict</code> و <code>set</code> نه.'
+    - id: q2
+      tag: dict-get
+      question:
+        en: Try It 3. For a missing key <code>"k"</code>, what is the difference between <code>d["k"]</code> and <code>d.get("k")</code>?
+        fa: امتحان کنید 3. برای کلید ناموجود <code>"k"</code>، تفاوت <code>d["k"]</code> و <code>d.get("k")</code> چیست؟
+      options:
+      - en: No difference.
+        fa: تفاوتی ندارند.
+      - en: <code>d["k"]</code> raises KeyError, <code>d.get("k")</code> returns <code>None</code>.
+        fa: <code>d["k"]</code> خطای KeyError می‌دهد و <code>d.get("k")</code> مقدار <code>None</code> برمی‌گرداند.
+      - en: <code>d["k"]</code> returns <code>None</code>, <code>d.get("k")</code> raises KeyError.
+        fa: <code>d["k"]</code> مقدار <code>None</code> برمی‌گرداند و <code>d.get("k")</code> خطای KeyError می‌دهد.
+      - en: Both add the key.
+        fa: هر دو کلید را اضافه می‌کنند.
+      correct: 1
+      why:
+        en: Use <code>d["k"]</code> when the key must exist, so a bug fails loudly. Use <code>get</code> when a missing key is normal.
+        fa: وقتی کلید باید وجود داشته باشد از <code>d["k"]</code> استفاده کنید تا باگ بلند اعلام شود. وقتی نبودن کلید عادی است از <code>get</code> استفاده کنید.
+    exercises:
+    - id: e1
+      prompt:
+        en: Try It 1. Build a dictionary <code>counts</code> that maps each letter of <code>word</code> to how many times it appears. Print <code>sorted(counts.items())</code>.
+        fa: امتحان کنید 1. دیکشنری <code>counts</code> را بسازید که هر حرف <code>word</code> را به تعداد تکرارش نگاشت کند. <code>sorted(counts.items())</code> را چاپ کنید.
+      starter: |
+        word = "mississippi"
+
+        counts = {}
+        # count each letter here
+
+        print(sorted(counts.items()))
+      solution: |
+        word = "mississippi"
+
+        counts = {}
+        for letter in word:
+            counts[letter] = counts.get(letter, 0) + 1
+
+        print(sorted(counts.items()))
+      param:
+        pattern: ^word\s*=.*$
+        flags: m
+      tests:
+      - out: '[(''i'', 4), (''m'', 1), (''p'', 2), (''s'', 4)]'
+      - set: word = "banana"
+        out: '[(''a'', 3), (''b'', 1), (''n'', 2)]'
+      - set: word = "a"
+        out: '[(''a'', 1)]'
+      - set: word = "aab"
+        out: '[(''a'', 2), (''b'', 1)]'
+      hints:
+      - en: Loop over the letters. For each one you need to add 1 to its count.
+        fa: روی حرف‌ها حلقه بزنید. برای هر حرف باید 1 به شمارنده‌اش اضافه کنید.
+      - en: The first time you see a letter it is not in the dictionary yet. <code>counts.get(letter, 0)</code> gives 0 in that case.
+        fa: بار اول که حرفی را می‌بینید هنوز در دیکشنری نیست. <code>counts.get(letter, 0)</code> در آن حالت 0 می‌دهد.
+      - en: <code>counts[letter] = counts.get(letter, 0) + 1</code>
+        fa: <code>counts[letter] = counts.get(letter, 0) + 1</code>
+    - id: e2
+      prompt:
+        en: 'Try It 4. Swap the keys and values of <code>original</code> into a new dictionary <code>inverted</code> and print it. For <code>{"one": 1, "two": 2}</code> that is <code>{1: ''one'', 2: ''two''}</code>.'
+        fa: 'امتحان کنید 4. کلیدها و مقدارهای <code>original</code> را جابه‌جا کنید و در دیکشنری تازهٔ <code>inverted</code> بگذارید و چاپ کنید. برای <code>{"one": 1, "two": 2}</code> می‌شود <code>{1: ''one'', 2: ''two''}</code>.'
+      starter: |
+        original = {"one": 1, "two": 2}
+
+        inverted = {}
+
+        print(inverted)
+      solution: |
+        original = {"one": 1, "two": 2}
+
+        inverted = {v: k for k, v in original.items()}
+
+        print(inverted)
+      param:
+        pattern: ^original\s*=.*$
+        flags: m
+      tests:
+      - out: '{1: ''one'', 2: ''two''}'
+      - set: 'original = {"a": "x"}'
+        out: '{''x'': ''a''}'
+      - set: 'original = {"p": 10, "q": 20, "r": 30}'
+        out: '{10: ''p'', 20: ''q'', 30: ''r''}'
+      hints:
+      - en: <code>original.items()</code> gives (key, value) pairs.
+        fa: <code>original.items()</code> جفت‌های (کلید، مقدار) را می‌دهد.
+      - en: 'A dictionary comprehension can unpack each pair: <code>for k, v in original.items()</code>.'
+        fa: 'dictionary comprehension می‌تواند هر جفت را باز کند: <code>for k, v in original.items()</code>.'
+      - en: 'Put the value first: <code>{v: k for ...}</code>.'
+        fa: 'مقدار را اول بنویسید: <code>{v: k for ...}</code>.'
+  7:
+    predictions:
+    - id: p1
+      tag: one-tuple
+      code: |-
+        single = (5,)
+        not_tuple = (5)
+        print(type(single), type(not_tuple))
+      answer: <class 'tuple'> <class 'int'>
+      why:
+        en: The comma makes the tuple, not the parentheses. <code>(5)</code> is just the number 5 in parentheses.
+        fa: ویرگول است که تاپل می‌سازد، نه پرانتز. <code>(5)</code> فقط عدد 5 داخل پرانتز است.
+    - id: p2
+      tag: tuple-shallow
+      code: |-
+        t = (1, [2, 3])
+        t[1].append(4)
+        print(t, len(t))
+      answer: (1, [2, 3, 4]) 2
+      memory_after: true
+      why:
+        en: A tuple cannot change which objects it holds, but a list inside it can still change. Immutability is shallow.
+        fa: تاپل نمی‌تواند عوض کند چه شیءهایی را نگه می‌دارد، اما لیستی که داخل آن است همچنان می‌تواند تغییر کند. تغییرناپذیری سطحی است.
+    - id: p3
+      tag: unpack-star
+      code: |-
+        a, *b, c = range(5)
+        print(a, b, c)
+      answer: 0 [1, 2, 3] 4
+      why:
+        en: The starred name collects everything that is left over into a <strong>list</strong>.
+        fa: نامی که ستاره دارد هر چه باقی مانده را در یک <strong>لیست</strong> جمع می‌کند.
+    - id: p4
+      tag: tuple-methods
+      code: |-
+        t = ("a", "b", "c", "b")
+        print(t[1:3], t.count("b"), t.index("c"))
+      answer: ('b', 'c') 2 2
+      why:
+        en: Slicing a tuple gives a tuple. <code>count("b")</code> is 2, and <code>index("c")</code> is the position of the first "c".
+        fa: برش یک تاپل، تاپل می‌دهد. <code>count("b")</code> برابر 2 است و <code>index("c")</code> جایگاه اولین "c" است.
+    - id: p5
+      tag: tuple-return
+      code: |-
+        def min_max(values):
+            return min(values), max(values)
+
+        result = min_max([4, 9, 1, 7])
+        print(result, type(result))
+      answer: (1, 9) <class 'tuple'>
+      why:
+        en: 'Returning two values with a comma really returns one tuple. The caller can unpack it: <code>lo, hi = min_max(...)</code>.'
+        fa: 'برگرداندن دو مقدار با ویرگول در واقع یک تاپل برمی‌گرداند. صدازننده می‌تواند آن را باز کند: <code>lo, hi = min_max(...)</code>.'
+    quizzes:
+    - id: q1
+      tag: tuple-shallow
+      question:
+        en: Try It 3. Why does <code>t = (1, [2]); t[1].append(3)</code> work but <code>t[0] = 9</code> fail?
+        fa: امتحان کنید 3. چرا <code>t = (1, [2]); t[1].append(3)</code> کار می‌کند اما <code>t[0] = 9</code> خطا می‌دهد؟
+      options:
+      - en: A tuple cannot rebind its slots, but the list inside the tuple is mutable.
+        fa: تاپل نمی‌تواند خانه‌هایش را دوباره وصل کند، اما لیست داخل تاپل تغییرپذیر است.
+      - en: Index 1 is special.
+        fa: اندیس 1 حالت ویژه دارد.
+      - en: Numbers are mutable.
+        fa: عددها تغییرپذیرند.
+      - en: <code>append</code> copies the tuple.
+        fa: <code>append</code> تاپل را کپی می‌کند.
+      correct: 0
+      why:
+        en: <code>t[0] = 9</code> tries to change the tuple itself. <code>t[1].append(3)</code> changes the list object that the tuple points to, and the tuple still points at the same list.
+        fa: <code>t[0] = 9</code> می‌خواهد خود تاپل را تغییر دهد. <code>t[1].append(3)</code> شیء لیستی را که تاپل به آن اشاره می‌کند تغییر می‌دهد و تاپل هنوز به همان لیست اشاره می‌کند.
+    exercises:
+    - id: e1
+      prompt:
+        en: Write <code>min_max(values)</code> so that it returns the smallest and largest value as one tuple. <code>min_max([4, 9, 1, 7])</code> must give <code>(1, 9)</code>.
+        fa: تابع <code>min_max(values)</code> را بنویسید که کوچک‌ترین و بزرگ‌ترین مقدار را در یک تاپل برگرداند. <code>min_max([4, 9, 1, 7])</code> باید <code>(1, 9)</code> بدهد.
+      starter: |
+        def min_max(values):
+            # return the smallest and the largest value
+            return None
+
+        lo, hi = min_max([4, 9, 1, 7])
+        print(lo, hi)
+      solution: |
+        def min_max(values):
+            # return the smallest and the largest value
+            return min(values), max(values)
+
+        lo, hi = min_max([4, 9, 1, 7])
+        print(lo, hi)
+      tests:
+      - post: |-
+          print(min_max([4, 9, 1, 7]))
+          print(min_max([5]))
+          print(min_max([-3, 0, -8]))
+        out: |-
+          (1, 9)
+          (5, 5)
+          (-8, 0)
+      hints:
+      - en: You can return several values separated by commas.
+        fa: می‌توانید چند مقدار را با ویرگول جدا کنید و برگردانید.
+      - en: The built-ins <code>min()</code> and <code>max()</code> take the list.
+        fa: توابع داخلی <code>min()</code> و <code>max()</code> لیست را می‌گیرند.
+      - en: <code>return min(values), max(values)</code>
+        fa: <code>return min(values), max(values)</code>
+    - id: e2
+      prompt:
+        en: 'Homework 4. Write <code>rotate_tuple(t, k)</code> that returns a rotated <em>new</em> tuple: the last <code>k</code> items move to the front. <code>rotate_tuple((1, 2, 3, 4, 5), 2)</code> gives <code>(4, 5, 1, 2, 3)</code>.'
+        fa: 'تکلیف 4. تابع <code>rotate_tuple(t, k)</code> را بنویسید که یک تاپل <em>تازهٔ</em> چرخانده‌شده برگرداند: <code>k</code> عضو آخر به ابتدا می‌روند. <code>rotate_tuple((1, 2, 3, 4, 5), 2)</code> مقدار <code>(4, 5, 1, 2, 3)</code> می‌دهد.'
+      starter: |
+        def rotate_tuple(t, k):
+            # return a new rotated tuple
+            return t
+
+        print(rotate_tuple((1, 2, 3, 4, 5), 2))
+      solution: |
+        def rotate_tuple(t, k):
+            k %= len(t)
+            return t[-k:] + t[:-k] if k else t
+
+        print(rotate_tuple((1, 2, 3, 4, 5), 2))
+      tests:
+      - post: |-
+          print(rotate_tuple((1, 2, 3, 4, 5), 2))
+          print(rotate_tuple((1, 2, 3, 4, 5), 0))
+          print(rotate_tuple((1, 2, 3, 4, 5), 7))
+          print(rotate_tuple(("a", "b", "c"), 1))
+        out: |-
+          (4, 5, 1, 2, 3)
+          (1, 2, 3, 4, 5)
+          (4, 5, 1, 2, 3)
+          ('c', 'a', 'b')
+      hints:
+      - en: Tuples can be sliced and added together, and both give new tuples.
+        fa: تاپل‌ها را می‌شود برش داد و به هم اضافه کرد و هر دو تاپل تازه می‌دهند.
+      - en: Rotating by 2 means <code>t[-2:] + t[:-2]</code>. Use <code>k %= len(t)</code> so large values wrap around.
+        fa: چرخاندن به اندازهٔ 2 یعنی <code>t[-2:] + t[:-2]</code>. با <code>k %= len(t)</code> مقدارهای بزرگ دوباره از اول شمرده می‌شوند.
+      - en: 'Careful with <code>k = 0</code>: <code>t[-0:]</code> is the whole tuple. Handle it separately.'
+        fa: 'مراقب <code>k = 0</code> باشید: <code>t[-0:]</code> کل تاپل است. آن را جداگانه مدیریت کنید.'
+  8:
+    predictions:
+    - id: p1
+      tag: set-ops
+      code: |-
+        a = {1, 2, 3, 4}
+        b = {3, 4, 5, 6}
+        print(a | b)
+        print(a & b)
+        print(a - b)
+        print(a ^ b)
+      answer: |-
+        {1, 2, 3, 4, 5, 6}
+        {3, 4}
+        {1, 2}
+        {1, 2, 5, 6}
+      why:
+        en: <code>|</code> is union, <code>&amp;</code> is intersection, <code>-</code> is difference (in a but not b) and <code>^</code> is symmetric difference (in exactly one).
+        fa: <code>|</code> اجتماع، <code>&amp;</code> اشتراک، <code>-</code> تفاضل (در a ولی نه در b) و <code>^</code> تفاضل متقارن (فقط در یکی) است.
+    - id: p2
+      tag: short-circuit
+      code: |-
+        print(0 or [] or "x" or 5)
+        print(1 and 2 and 0 and 3)
+      answer: |-
+        x
+        0
+      why:
+        en: <code>or</code> returns the first truthy operand and <code>and</code> returns the first falsy one. Python stops as soon as it knows the answer. This is Try It 2.
+        fa: <code>or</code> اولین عملوند درست‌مانند و <code>and</code> اولین عملوند نادرست‌مانند را برمی‌گرداند. پایتون به‌محض اینکه جواب را بداند می‌ایستد. این همان «امتحان کنید» شمارهٔ 2 است.
+    - id: p3
+      tag: truthiness
+      code: print(bool("False"), bool(""), bool([[]]), bool(0.0))
+      answer: True False True False
+      why:
+        en: A non-empty string is truthy, even the text "False". An empty string and 0.0 are falsy. <code>[[]]</code> holds one item, so it is truthy. This is Try It 1.
+        fa: هر رشتهٔ ناخالی درست‌مانند است، حتی متن "False". رشتهٔ خالی و 0.0 نادرست‌مانندند. <code>[[]]</code> یک عضو دارد، پس درست‌مانند است. این همان «امتحان کنید» شمارهٔ 1 است.
+    - id: p4
+      tag: empty-set
+      code: print(type({}), type(set()))
+      answer: <class 'dict'> <class 'set'>
+      why:
+        en: <code>{}</code> is an empty <strong>dictionary</strong>. The only way to make an empty set is <code>set()</code>.
+        fa: <code>{}</code> یک <strong>دیکشنری</strong> خالی است. تنها راه ساختن مجموعهٔ خالی <code>set()</code> است.
+    - id: p5
+      tag: set-equal
+      code: print({1, 2, 3} == {3, 2, 1}, [1, 2, 3] == [3, 2, 1])
+      answer: True False
+      why:
+        en: Sets have no order, so the same members are equal. Lists keep order, so a different order is a different list. This is Try It 4.
+        fa: مجموعه‌ها ترتیب ندارند، پس عضوهای یکسان برابرند. لیست‌ها ترتیب را نگه می‌دارند، پس ترتیب متفاوت یعنی لیست متفاوت. این همان «امتحان کنید» شمارهٔ 4 است.
+    - id: p6
+      tag: bool-int
+      code: |-
+        age = 25
+        print(18 <= age < 65, True + True)
+      answer: True 2
+      why:
+        en: Comparisons can be chained. And <code>bool</code> is a subclass of <code>int</code>, so <code>True</code> counts as 1.
+        fa: مقایسه‌ها را می‌شود زنجیر کرد. و <code>bool</code> زیرکلاسی از <code>int</code> است، پس <code>True</code> برابر 1 حساب می‌شود.
+    quizzes:
+    - id: q1
+      tag: empty-set
+      question:
+        en: Try It 3. Why do you write <code>set()</code> and not <code>{}</code> for an empty set?
+        fa: امتحان کنید 3. چرا برای مجموعهٔ خالی <code>set()</code> می‌نویسید و نه <code>{}</code>؟
+      options:
+      - en: <code>{}</code> is a syntax error.
+        fa: <code>{}</code> خطای نحوی است.
+      - en: <code>{}</code> creates an empty dictionary.
+        fa: <code>{}</code> یک دیکشنری خالی می‌سازد.
+      - en: <code>{}</code> creates an empty tuple.
+        fa: <code>{}</code> یک تاپل خالی می‌سازد.
+      - en: There is no difference.
+        fa: تفاوتی نیست.
+      correct: 1
+      why:
+        en: Curly braces were used for dictionaries first, so an empty pair means an empty dictionary.
+        fa: آکولاد ابتدا برای دیکشنری به کار رفت، پس یک جفت آکولاد خالی یعنی دیکشنری خالی.
+    - id: q2
+      tag: is-eq
+      question:
+        en: With <code>a = [1, 2]</code> and <code>b = [1, 2]</code>, what are <code>a == b</code> and <code>a is b</code>?
+        fa: با <code>a = [1, 2]</code> و <code>b = [1, 2]</code>، مقدار <code>a == b</code> و <code>a is b</code> چیست؟
+      options:
+      - en: True and True
+        fa: True و True
+      - en: True and False
+        fa: True و False
+      - en: False and True
+        fa: False و True
+      - en: False and False
+        fa: False و False
+      correct: 1
+      why:
+        en: <code>==</code> compares values and <code>is</code> compares identity. They are two separate lists with equal contents. Use <code>is</code> only for <code>None</code>.
+        fa: <code>==</code> مقدارها را و <code>is</code> هویت را مقایسه می‌کند. این‌ها دو لیست جدا با محتوای برابرند. <code>is</code> را فقط برای <code>None</code> به کار ببرید.
+    exercises:
+    - id: e1
+      prompt:
+        en: 'Homework 5. Set <code>is_leap</code> with one boolean expression: a year is a leap year if it is divisible by 4 and either not divisible by 100 or divisible by 400.'
+        fa: 'تکلیف 5. <code>is_leap</code> را با یک عبارت بولی بسازید: سال کبیسه است اگر بر 4 بخش‌پذیر باشد و یا بر 100 بخش‌پذیر نباشد یا بر 400 بخش‌پذیر باشد.'
+      starter: |
+        year = 2024
+
+        is_leap = False
+
+        print(is_leap)
+      solution: |
+        year = 2024
+
+        is_leap = year % 4 == 0 and (year % 100 != 0 or year % 400 == 0)
+
+        print(is_leap)
+      param:
+        pattern: ^year\s*=.*$
+        flags: m
+      tests:
+      - out: 'True'
+      - set: year = 1900
+        out: 'False'
+      - set: year = 2000
+        out: 'True'
+      - set: year = 2023
+        out: 'False'
+      - set: year = 2100
+        out: 'False'
+      hints:
+      - en: 'Start with the rule that must always hold: <code>year % 4 == 0</code>.'
+        fa: 'با قاعده‌ای شروع کنید که همیشه باید برقرار باشد: <code>year % 4 == 0</code>.'
+      - en: 'The second part is an <code>or</code>: not a multiple of 100, or a multiple of 400.'
+        fa: 'بخش دوم یک <code>or</code> است: مضرب 100 نباشد، یا مضرب 400 باشد.'
+      - en: Combine them with <code>and</code> and put the <code>or</code> part in parentheses.
+        fa: آن‌ها را با <code>and</code> ترکیب کنید و بخش <code>or</code> را داخل پرانتز بگذارید.
+    - id: e2
+      prompt:
+        en: Example 1 as an exercise. Remove the duplicates from <code>names</code> and print the unique names as a sorted list. For the starting list the answer is <code>['ali', 'neda', 'sara']</code>.
+        fa: مثال 1 به‌صورت تمرین. تکراری‌های <code>names</code> را حذف کنید و نام‌های یکتا را به‌صورت لیست مرتب چاپ کنید. برای لیست اولیه جواب <code>['ali', 'neda', 'sara']</code> است.
+      starter: |
+        names = ["ali", "sara", "ali", "neda", "sara"]
+
+        result = names
+
+        print(result)
+      solution: |
+        names = ["ali", "sara", "ali", "neda", "sara"]
+
+        result = sorted(set(names))
+
+        print(result)
+      param:
+        pattern: ^names\s*=.*$
+        flags: m
+      tests:
+      - out: '[''ali'', ''neda'', ''sara'']'
+      - set: names = ["x"]
+        out: '[''x'']'
+      - set: names = ["b", "a", "b", "c", "a"]
+        out: '[''a'', ''b'', ''c'']'
+      hints:
+      - en: A set keeps each item only once.
+        fa: مجموعه هر عضو را فقط یک بار نگه می‌دارد.
+      - en: Turn the list into a set with <code>set(names)</code>.
+        fa: لیست را با <code>set(names)</code> به مجموعه تبدیل کنید.
+      - en: Sets have no order, so wrap the result in <code>sorted()</code>.
+        fa: مجموعه‌ها ترتیب ندارند، پس نتیجه را در <code>sorted()</code> بگذارید.
+  9:
+    predictions: []
+    quizzes:
+    - id: q1
+      tag: file-modes
+      question:
+        en: Try It 2. What happens if you open an existing file with mode <code>"w"</code> and write nothing?
+        fa: امتحان کنید 2. اگر فایل موجودی را با حالت <code>"w"</code> باز کنید و چیزی ننویسید چه می‌شود؟
+      options:
+      - en: The file is left unchanged.
+        fa: فایل بدون تغییر می‌ماند.
+      - en: The file is emptied.
+        fa: فایل خالی می‌شود.
+      - en: Python raises FileExistsError.
+        fa: پایتون خطای FileExistsError می‌دهد.
+      - en: The file is deleted.
+        fa: فایل حذف می‌شود.
+      correct: 1
+      why:
+        en: Opening with <code>"w"</code> erases the old content immediately, even if you never write. Use <code>"a"</code> to append.
+        fa: باز کردن با <code>"w"</code> بلافاصله محتوای قبلی را پاک می‌کند، حتی اگر هیچ‌چیز ننویسید. برای افزودن از <code>"a"</code> استفاده کنید.
+    - id: q2
+      tag: file-iter
+      question:
+        en: Try It 3. Why is <code>for line in f:</code> better than <code>f.readlines()</code> for a 2 GB log file?
+        fa: امتحان کنید 3. چرا برای یک فایل لاگ 2 گیگابایتی <code>for line in f:</code> بهتر از <code>f.readlines()</code> است؟
+      options:
+      - en: It is shorter to type.
+        fa: نوشتنش کوتاه‌تر است.
+      - en: It reads one line at a time instead of loading the whole file into memory.
+        fa: هر بار یک خط می‌خواند و کل فایل را وارد حافظه نمی‌کند.
+      - en: <code>readlines()</code> cannot read big files at all.
+        fa: <code>readlines()</code> اصلاً نمی‌تواند فایل بزرگ بخواند.
+      - en: It also sorts the lines.
+        fa: خط‌ها را هم مرتب می‌کند.
+      correct: 1
+      why:
+        en: Iterating over the file object is lazy and memory efficient. <code>readlines()</code> builds a list of every line at once.
+        fa: پیمایش شیء فایل تنبل و کم‌مصرف است. <code>readlines()</code> فهرست همهٔ خط‌ها را یک‌جا می‌سازد.
+    - id: q3
+      tag: file-modes
+      question:
+        en: Which mode refuses to overwrite a file that already exists?
+        fa: کدام حالت از بازنویسی فایلی که از قبل وجود دارد خودداری می‌کند؟
+      options:
+      - en: <code>"w"</code>
+        fa: <code>"w"</code>
+      - en: <code>"a"</code>
+        fa: <code>"a"</code>
+      - en: <code>"x"</code>
+        fa: <code>"x"</code>
+      - en: <code>"r+"</code>
+        fa: <code>"r+"</code>
+      correct: 2
+      why:
+        en: <code>"x"</code> creates the file exclusively and raises an error if it exists. That is the safe choice for a backup tool.
+        fa: <code>"x"</code> فایل را به‌صورت انحصاری می‌سازد و اگر وجود داشته باشد خطا می‌دهد. برای ابزار پشتیبان‌گیری انتخاب امنی است.
+    - id: q4
+      tag: file-encoding
+      question:
+        en: What should you always pass when reading or writing text files, especially with Persian text?
+        fa: هنگام خواندن و نوشتن فایل متنی، به‌ویژه متن فارسی، همیشه چه چیزی باید بدهید؟
+      options:
+      - en: <code>mode="t"</code>
+        fa: <code>mode="t"</code>
+      - en: <code>encoding="utf-8"</code>
+        fa: <code>encoding="utf-8"</code>
+      - en: <code>newline="\n"</code>
+        fa: <code>newline="\n"</code>
+      - en: <code>buffering=0</code>
+        fa: <code>buffering=0</code>
+      correct: 1
+      why:
+        en: Without it the default encoding depends on the operating system, which can garble or reject Persian text.
+        fa: بدون آن رمزگذاری پیش‌فرض به سیستم‌عامل بستگی دارد و ممکن است متن فارسی خراب شود یا رد شود.
+    - id: q5
+      tag: with-stmt
+      question:
+        en: Why use <code>with open(...) as f:</code>?
+        fa: چرا از <code>with open(...) as f:</code> استفاده می‌کنیم؟
+      options:
+      - en: It makes reading faster.
+        fa: خواندن را سریع‌تر می‌کند.
+      - en: It closes the file automatically, even if an error happens inside.
+        fa: فایل را خودکار می‌بندد، حتی اگر داخل آن خطا رخ دهد.
+      - en: It lets you read and write at once.
+        fa: اجازهٔ هم‌زمان خواندن و نوشتن می‌دهد.
+      - en: It is required for text files.
+        fa: برای فایل‌های متنی الزامی است.
+      correct: 1
+      why:
+        en: The <code>with</code> block guarantees <code>close()</code> runs, so data is saved and the file is not left locked.
+        fa: بلوک <code>with</code> تضمین می‌کند که <code>close()</code> اجرا شود، پس داده ذخیره می‌شود و فایل قفل نمی‌ماند.
+    exercises: []

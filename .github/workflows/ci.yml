@@ -1,0 +1,43 @@
+name: ci
+on: [push, pull_request]
+jobs:
+  content:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.13' }
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - run: pip install pyyaml jsonschema
+      - run: npm ci
+      - name: Content pipeline tests
+        run: python3 -I tools/content/test_pipeline.py
+      - name: Extract, verify no line lost, validate labs against CPython
+        run: python3 -I tools/content/build.py
+      - name: Differential test in the browser engine (Pyodide vs CPython)
+        run: node tools/content/engine_check.mjs content/build/*.items.json
+  database:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: sudo apt-get update && sudo apt-get install -y postgresql-16 || sudo apt-get install -y postgresql
+      - run: bash supabase/tests/run.sh
+  web:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.13' }
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - run: pip install pyyaml jsonschema
+      - run: npm ci
+      - run: npm run build
+      - run: npm test
+      - run: npx playwright install --with-deps chromium
+      - run: sudo apt-get install -y postgresql
+      - name: Browser tests (accessibility, RTL, offline, runner)
+        run: npm run -w apps/web e2e
+      - name: Auth and sync tests (real migrations behind a stand-in API)
+        run: npm run -w apps/web e2e:auth

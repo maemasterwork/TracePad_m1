@@ -1,0 +1,14 @@
+node_modules
+dist
+content/build
+_scratch
+.env
+.env.local
+apps/web/public/pyodide
+apps/web/public/content
+__pycache__
+dist
+dist-auth
+test-results
+playwright-report
+.env.*.local

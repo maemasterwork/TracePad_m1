@@ -1,0 +1,52 @@
+/* Design tokens. Every colour used anywhere in the app comes from here, so a theme is just a set of variables.
+   Themes: light (default), dark, high contrast. Palette: default or colour-blind safe (blue/orange instead of green/red). */
+:root {
+  --bg: #edf0f4; --surface: #ffffff; --surface-2: #e3e8ef; --ink: #132033; --muted: #4d5a6e; --line: #c4ccd8;
+  --accent: #1d4ed8; --accent-ink: #ffffff; --accent-soft: #dce5fb; --focus: #1d4ed8;
+  --good: #146c43; --good-soft: #dbf0e4; --bad: #b42318; --bad-soft: #fbe3e0; --warn: #7a4f00; --warn-soft: #fbeacb;
+  --code-bg: #f6f8fb; --wire: #3b4a63; --grid: rgba(19, 32, 51, 0.07);
+  --tok-kw: #7c3aed; --tok-str: #0f766e; --tok-num: #b45309; --tok-com: #5f6b7d; --tok-fn: #1d4ed8;
+  --font-display: "Bricolage Grotesque", "Vazirmatn", system-ui, sans-serif;
+  --font-body: "IBM Plex Sans", "Vazirmatn", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  --radius: 8px; --radius-lg: 14px; --shadow: 0 1px 2px rgba(19, 32, 51, 0.08), 0 4px 14px rgba(19, 32, 51, 0.06);
+  --user-font-scale: 1; --line-height: 1.6; --space: 16px; --gutter: max(16px, env(safe-area-inset-left, 0px));
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    --bg: #0d121a; --surface: #151c27; --surface-2: #1e2735; --ink: #e8edf4; --muted: #a3afc0; --line: #2c3748;
+    --accent: #86a8ff; --accent-ink: #0a1330; --accent-soft: #1d2b52; --focus: #9db9ff;
+    --good: #5bd197; --good-soft: #12301f; --bad: #ff8a80; --bad-soft: #3a1715; --warn: #f2c265; --warn-soft: #3a2c0e;
+    --code-bg: #101722; --wire: #9db0cc; --grid: rgba(255, 255, 255, 0.05);
+    --tok-kw: #c4a5ff; --tok-str: #5eddc9; --tok-num: #f3b568; --tok-com: #8a98ad; --tok-fn: #86a8ff;
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 4px 14px rgba(0, 0, 0, 0.3); color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0d121a; --surface: #151c27; --surface-2: #1e2735; --ink: #e8edf4; --muted: #a3afc0; --line: #2c3748;
+  --accent: #86a8ff; --accent-ink: #0a1330; --accent-soft: #1d2b52; --focus: #9db9ff;
+  --good: #5bd197; --good-soft: #12301f; --bad: #ff8a80; --bad-soft: #3a1715; --warn: #f2c265; --warn-soft: #3a2c0e;
+  --code-bg: #101722; --wire: #9db0cc; --grid: rgba(255, 255, 255, 0.05);
+  --tok-kw: #c4a5ff; --tok-str: #5eddc9; --tok-num: #f3b568; --tok-com: #8a98ad; --tok-fn: #86a8ff;
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 4px 14px rgba(0, 0, 0, 0.3); color-scheme: dark;
+}
+/* High contrast: black on white, thick lines, no soft fills that rely on subtle differences. */
+:root[data-theme="contrast"] {
+  --bg: #ffffff; --surface: #ffffff; --surface-2: #ececec; --ink: #000000; --muted: #1a1a1a; --line: #000000;
+  --accent: #0000ee; --accent-ink: #ffffff; --accent-soft: #e6e6ff; --focus: #000000;
+  --good: #004d00; --good-soft: #e6ffe6; --bad: #a00000; --bad-soft: #ffe6e6; --warn: #5c3b00; --warn-soft: #fff1d6;
+  --code-bg: #ffffff; --wire: #000000; --grid: transparent;
+  --tok-kw: #5b00b5; --tok-str: #005050; --tok-num: #7a3500; --tok-com: #3d3d3d; --tok-fn: #0000ee;
+  --shadow: none; color-scheme: light;
+}
+/* Colour-blind safe: status colours differ in lightness and hue (blue vs orange), never red vs green. Icons and text
+   labels always accompany colour as well. */
+:root[data-palette="cb"] { --good: #0b5cad; --good-soft: #dbeafe; --bad: #b45309; --bad-soft: #ffedd5; }
+:root[data-theme="dark"][data-palette="cb"] { --good: #7ab8ff; --good-soft: #10304f; --bad: #ffb454; --bad-soft: #3d2608; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme])[data-palette="cb"] { --good: #7ab8ff; --good-soft: #10304f; --bad: #ffb454; --bad-soft: #3d2608; }
+}
+:root[data-dyslexia="1"] { --font-body: "Atkinson Hyperlegible", "Vazirmatn", system-ui, sans-serif; --font-display: "Atkinson Hyperlegible", "Vazirmatn", system-ui, sans-serif; }
+:root[data-spacing="relaxed"] { --line-height: 1.85; }
+:root[data-spacing="wide"] { --line-height: 2.1; }
