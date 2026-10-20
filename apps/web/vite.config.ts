@@ -6,20 +6,21 @@ import path from 'node:path';
 import { securityHeaders } from './security-headers.ts';
 
 function headersPlugin(connect: string[]): Plugin {
-  const h = securityHeaders(connect);
+  const devHeaders = securityHeaders(connect, true);
+  const strictHeaders = securityHeaders(connect);
   // Must return nothing: a returned function would be treated by Vite as a post-middleware hook.
-  const apply = (server: { middlewares: { use: (fn: (req: unknown, res: { setHeader: (k: string, v: string) => void }, next: () => void) => void) => unknown } }): void => {
+  const apply = (headers: Record<string, string>) => (server: { middlewares: { use: (fn: (req: unknown, res: { setHeader: (k: string, v: string) => void }, next: () => void) => void) => unknown } }): void => {
     server.middlewares.use((_req, res, next) => {
-      for (const [k, v] of Object.entries(h)) res.setHeader(k, v);
+      for (const [k, v] of Object.entries(headers)) res.setHeader(k, v);
       next();
     });
   };
   return {
     name: 'tracepad-headers',
-    configureServer: apply,
-    configurePreviewServer: apply,
+    configureServer: apply(devHeaders),
+    configurePreviewServer: apply(strictHeaders),
     closeBundle() {
-      const lines = ['/*', ...Object.entries(h).map(([k, v]) => `  ${k}: ${v}`), '', '/assets/*', '  Cache-Control: public, max-age=31536000, immutable', '', '/pyodide/*', '  Cache-Control: public, max-age=31536000, immutable', ''];
+      const lines = ['/*', ...Object.entries(strictHeaders).map(([k, v]) => `  ${k}: ${v}`), '', '/assets/*', '  Cache-Control: public, max-age=31536000, immutable', '', '/pyodide/*', '  Cache-Control: public, max-age=31536000, immutable', ''];
       fs.writeFileSync(path.resolve(import.meta.dirname, 'dist/_headers'), lines.join('\n'));
     },
   };
